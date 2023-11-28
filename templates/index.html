@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech Emotion Detection</title>
+
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 20px;
+        text-align: center;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      input {
+        margin-top: 1%;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 4%;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      #emotionEmoji {
+        font-size: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Speech Emotion Detection</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".wav" />
+      <p id="emotionEmoji" style="display: none"></p>
+      <button type="submit">Predict Emotion</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+      document
+        .querySelector("form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const response = await fetch("/predict", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+          document.getElementById(
+            "result"
+          ).innerText = `Predicted Emotion: ${result.emotion}`;
+          displayEmotionEmoji(result.emotion);
+        });
+
+      function displayEmotionEmoji(emotion) {
+        const emojiMap = {
+          happy: "happy-cute.gif",
+          sad: "sad.gif",
+          angry: "angry.gif",
+          disgust: "disgust.gif",
+          fear: "fear.gif",
+          neutral: "neutral.gif",
+        };
+
+        const emojiElement = document.getElementById("emotionEmoji");
+        emojiElement.innerHTML = `<img src="../static/${
+          emojiMap[emotion] || ""
+        }" alt="${emotion} GIF" width="150">`;
+        emojiElement.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
