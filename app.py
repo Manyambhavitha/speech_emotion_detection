@@ -1,17 +1,17 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 import librosa
-from keras.models import load_model
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import OneHotEncoder
+from tensorflow.keras.models import load_model
+import os
 import joblib
 
 app = Flask(__name__)
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Load the pre-trained model
-model = load_model(r'static\model.h5')
-scaler = joblib.load(r'static\fitted_scaler.pkl')  
-encoder = joblib.load(r'static\fitted_encoder.pkl')  
+model = load_model(os.path.join(BASE_DIR, 'static', 'model.h5'))
+scaler = joblib.load(os.path.join(BASE_DIR, 'static', 'fitted_scaler.pkl')) 
+encoder = joblib.load(os.path.join(BASE_DIR, 'static', 'fitted_encoder.pkl'))
 
 # Function to extract features from audio data
 def extract_features(data, sample_rate):
