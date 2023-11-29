@@ -70,4 +70,4 @@ def predict():
         return jsonify({'emotion': predicted_label[0][0]})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
