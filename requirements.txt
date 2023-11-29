@@ -5,3 +5,4 @@ Keras
 scikit-learn
 joblib
 gunicorn
+tensorflow
