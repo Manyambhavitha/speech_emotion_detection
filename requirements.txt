@@ -4,3 +4,4 @@ librosa
 Keras
 scikit-learn
 joblib
+gunicorn
