@@ -4,7 +4,4 @@ librosa
 Keras
 scikit-learn
 joblib
-<<<<<<< HEAD
 gunicorn
-=======
->>>>>>> 8ce834de078e14f94ef618ce1baf84c28a4ee0e0
